@@ -1,0 +1,42 @@
+# Elixir build artifacts
+/_build
+/deps
+
+# Phoenix assets (if applicable)
+/assets/node_modules
+/assets/.sass-cache
+/priv/static
+
+# Documentation and ExDoc output
+/site
+
+# Coverage files from tests
+/cover
+
+# Mix-generated files
+*.ez  # Archive artifacts (mix archive.build)
+template_application-*.tar  # Package tarball (mix hex.build)
+.fetch  # Dependency fetch marker
+
+# Crash dump and temporary files
+erl_crash.dump
+/tmp/
+
+# Environment variable files
+.env
+.env.*  # e.g., .env.local, .env.prod
+
+# Erlang PLT files (Dialyzer)
+/*.plt
+/*.plt.*
+
+# Editor and IDE-specific files
+.idea/
+*.swp
+*~
+
+# macOS system files
+.DS_Store
+
+# Log files
+*.log
