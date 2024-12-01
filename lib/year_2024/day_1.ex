@@ -1,9 +1,26 @@
 defmodule Year2024.Day1 do
   @data_path_part_1 "lib/inputs/2024/day_1/part_1.txt"
+  @data_path_part_2 "lib/inputs/2024/day_1/part_2.txt"
   @space_between_column_regex ~r/\s+/
 
   def part_1() do
-    @data_path_part_1
+    {fst_col_location_ids, snd_col_location_ids} =
+      extract_location_id_rows_from_input(@data_path_part_1)
+
+    fst_col_location_ids = Enum.sort(fst_col_location_ids)
+    snd_col_location_ids = Enum.sort(snd_col_location_ids)
+
+    fst_col_location_ids
+    |> Enum.zip(snd_col_location_ids)
+    |> Enum.map(fn {a, b} -> abs(b - a) end)
+    |> Enum.sum()
+  end
+
+  def part_2() do
+  end
+
+  defp extract_location_id_rows_from_input(file_path) do
+    file_path
     |> Infrastructure.InputFileLoader.read_input()
     |> Enum.map(fn row ->
       String.split(row, @space_between_column_regex, trim: true)
@@ -12,13 +29,5 @@ defmodule Year2024.Day1 do
       {String.to_integer(column_1), String.to_integer(column_2)}
     end)
     |> Enum.unzip()
-    |> then(fn {column_1, column_2} ->
-      {Enum.sort(column_1), Enum.sort(column_2)}
-    end)
-    |> then(fn {sorted_column_1, sorted_column_2} ->
-      Enum.zip(sorted_column_1, sorted_column_2)
-      |> Enum.map(fn {a, b} -> abs(b - a) end)
-    end)
-    |> Enum.sum()
   end
 end
