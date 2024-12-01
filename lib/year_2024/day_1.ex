@@ -1,5 +1,5 @@
 defmodule Year2024.Day1 do
-  @data_path_part_1 "lib/inputs/2024/day_1/input.txt"
+  @data_path_part_1 "lib/inputs/2024/day_1/part_1.txt"
   @space_between_column_regex ~r/\s+/
 
   def part_1() do
