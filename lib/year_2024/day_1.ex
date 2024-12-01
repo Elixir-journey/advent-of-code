@@ -17,6 +17,14 @@ defmodule Year2024.Day1 do
   end
 
   def part_2() do
+    {fst_col_location_ids, snd_col_location_ids} =
+      extract_location_id_rows_from_input(@data_path_part_2)
+
+    frequency_map = build_frequency_map(snd_col_location_ids)
+
+    Enum.reduce(fst_col_location_ids, 0, fn location_id, acc ->
+      acc + location_id * Map.get(frequency_map, location_id, 0)
+    end)
   end
 
   defp extract_location_id_rows_from_input(file_path) do
@@ -29,5 +37,12 @@ defmodule Year2024.Day1 do
       {String.to_integer(column_1), String.to_integer(column_2)}
     end)
     |> Enum.unzip()
+  end
+
+  # TODO: Solid candidate for a common function for the future.
+  defp build_frequency_map(array) do
+    Enum.reduce(array, %{}, fn key, acc ->
+      Map.update(acc, key, 1, &(&1 + 1))
+    end)
   end
 end
