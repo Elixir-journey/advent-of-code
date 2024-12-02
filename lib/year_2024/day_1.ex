@@ -1,4 +1,18 @@
 defmodule Year2024.Day1 do
+  @moduledoc """
+  --- Day 1: Historian Hysteria ---
+
+  The Chief Historian has gone missing, and it's up to you to help a group of Senior Historians reconcile their conflicting lists of location IDs.
+
+  ## Part 1: Total Distance
+  Pair up the smallest number in the left list with the smallest number in the right list,
+  then the second-smallest left number with the second-smallest right number, and so on.
+  Within each pair, figure out how far apart the two numbers are; you'll need to add up all of those distances.
+
+  ## Part 2: Similarity Score
+  Calculate a total similarity score by adding up each number in the left list after multiplying it by
+  the number of times that number appears in the right list.
+  """
   @data_path_part_1 "lib/inputs/2024/day_1/part_1.txt"
   @data_path_part_2 "lib/inputs/2024/day_1/part_2.txt"
 
