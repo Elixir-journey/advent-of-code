@@ -3,6 +3,8 @@ defmodule Year2024.Day1 do
   @data_path_part_2 "lib/inputs/2024/day_1/part_2.txt"
   @space_between_column_regex ~r/\s+/
 
+  import Infrastructure.Enum.CommonHelpers, only: [build_frequency_map: 1]
+
   def part_1() do
     {fst_col_location_ids, snd_col_location_ids} =
       extract_location_id_rows_from_input(@data_path_part_1)
@@ -37,12 +39,5 @@ defmodule Year2024.Day1 do
       {String.to_integer(column_1), String.to_integer(column_2)}
     end)
     |> Enum.unzip()
-  end
-
-  # TODO: Solid candidate for a common function for the future.
-  defp build_frequency_map(array) do
-    Enum.reduce(array, %{}, fn key, acc ->
-      Map.update(acc, key, 1, &(&1 + 1))
-    end)
   end
 end
