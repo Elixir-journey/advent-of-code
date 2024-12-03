@@ -18,15 +18,35 @@ defmodule Year2024.Day2 do
   @data_path_part_1 "lib/inputs/2024/day_2/part_1.txt"
   @min_diff 1
   @max_diff 3
+
   alias Infrastructure.InputFileLoader
+  import Infrastructure.Enum.CommonHelpers
 
   @doc """
   Counts of many safe reports can be observed from the input data in part_1.txt
   """
   def part_1 do
-    extracted_reports = InputFileLoader.extract_lines_from_text(@data_path_part_1)
+    with {:ok, reports} <- InputFileLoader.get_parsed_lines(@data_path_part_1) do
+      reports
+      |> Enum.map(&convert_strings_to_integers/1)
+      |> Enum.filter(fn report -> safe_report?(report, @min_diff, @max_diff) end)
+      |> Enum.count()
+    end
   end
 
-  defp safe_report?(report) do
+  defp safe_report?(levels, min_diff, max_diff) do
+    case levels do
+      [_] ->
+        # Single-element lists are considered safe
+        true
+
+      [] ->
+        # Empty lists are not safe
+        false
+
+      _ ->
+        (strictly_increasing?(levels) or strictly_decreasing?(levels)) and
+          adjacent_values_in_range?(levels, min_diff, max_diff)
+    end
   end
 end
