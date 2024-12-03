@@ -4,6 +4,42 @@ defmodule Infrastructure.InputFileLoader do
   """
 
   @doc """
+  Reads the file at the given `file_path` and parses its content into lines, splitting each line into columns.
+
+  ## Options
+
+    - `regex`: The regex used to split each line into columns (default: whitespace).
+    - `split_separator`: The string used to split the text into lines (default: `"\n"`).
+
+  Returns `{:ok, parsed_lines}` if successful, or `{:error, reason}` for any errors.
+
+  ## Examples
+
+      iex> Infrastructure.InputFileLoader.get_parsed_lines("input.txt")
+      {:ok, [["line1", "line2"], ["line3", "line4"]]}
+
+      iex> Infrastructure.InputFileLoader.get_parsed_lines("input.txt", ~r/,/, "\n")
+      {:ok, [["a", "b"], ["c", "d"]]}
+
+      iex> Infrastructure.InputFileLoader.get_parsed_lines("nonexistent.txt")
+      {:error, :enoent}
+  """
+  @spec get_parsed_lines(binary(), Regex.t(), String.t()) ::
+          {:ok, list(list(binary()))} | {:error, any()}
+  def get_parsed_lines(file_path, regex \\ ~r/\s+/, split_separator \\ "\n")
+
+  def get_parsed_lines(file_path, regex, split_separator) when is_binary(file_path) do
+    case read_input(file_path) do
+      {:ok, content} -> extract_lines_from_text(content, regex, split_separator)
+      {:error, reason} -> {:error, reason}
+    end
+  end
+
+  def get_parsed_lines(_, _, _) do
+    {:error, "Invalid input. Expected a valid file path as a binary string."}
+  end
+
+  @doc """
   Reads the input file at the given `file_path` and returns its content as a string.
 
   Returns `{:ok, content}` if successful, or `{:error, reason}` if the file cannot be read.
