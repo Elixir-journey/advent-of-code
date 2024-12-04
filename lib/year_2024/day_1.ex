@@ -31,7 +31,14 @@ defmodule Year2024.Day1 do
     |> operation.()
   end
 
-  defp load_columns(path) do
+  @doc """
+  Loads columns from the file at the given path, parsing them into two separate lists.
+
+  ## Examples
+      iex> Year2024.Day1.load_columns("test/file_samples/day_1_part_1_sample.txt")
+      {[3, 4, 2, 1, 3, 3], [4, 3, 5, 3, 9, 3]}
+  """
+  def load_columns(path) do
     with {:ok, content} <- InputFileLoader.read_input(path),
          {:ok, parsed_lines} <- InputFileLoader.extract_lines_from_text(content) do
       parsed_lines
@@ -44,13 +51,32 @@ defmodule Year2024.Day1 do
 
   defp parse_row([col1, col2]), do: {String.to_integer(col1), String.to_integer(col2)}
 
-  defp total_distance({col1, col2}) do
+  @doc """
+  Calculates the total distance between two sorted lists.
+
+  ## Examples
+
+      iex> Year2024.Day1.total_distance({[3, 1, 4], [2, 5, 1]})
+      2
+  """
+  def total_distance({col1, col2}) do
     Enum.sort(col1)
     |> Enum.zip(Enum.sort(col2))
     |> Enum.reduce(0, fn {a, b}, acc -> acc + abs(a - b) end)
   end
 
-  defp similarity_score({col1, col2}) do
+  @doc """
+  Calculates the similarity score between two lists.
+
+  ## Examples
+
+      iex> Year2024.Day1.similarity_score({[1, 2, 3], [3, 3, 2]})
+      8
+
+      iex> Year2024.Day1.similarity_score({[4, 5], [6, 7]})
+      0
+  """
+  def similarity_score({col1, col2}) do
     frequency_map = build_frequency_map(col2)
 
     Enum.reduce(col1, 0, fn id, acc ->

@@ -28,7 +28,7 @@ defmodule Infrastructure.Enum.CommonHelpers do
       %{}
 
       iex> Infrastructure.Enum.CommonHelpers.build_frequency_map([:x, :y, :x], default: 0)
-      %{x: 2, y: 1}
+      %{x: 1, y: 0}
 
   ## Parameters
 
