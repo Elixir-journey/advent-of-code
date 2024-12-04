@@ -14,15 +14,16 @@ defmodule Infrastructure.InputFileLoader do
   Returns `{:ok, parsed_lines}` if successful, or `{:error, reason}` for any errors.
 
   ## Examples
+    # Example with an invalid file path
+    iex> File.write!("test/file_samples/one_line.txt", "Hello\nWorld!\n")
+    :ok
 
-      iex> Infrastructure.InputFileLoader.get_parsed_lines("input.txt")
-      {:ok, [["line1", "line2"], ["line3", "line4"]]}
+    iex> Infrastructure.InputFileLoader.get_parsed_lines("test/file_samples/one_line.txt")
+    {:ok, [["Hello"], ["World!"]]}
 
-      iex> Infrastructure.InputFileLoader.get_parsed_lines("input.txt", ~r/,/, "\n")
-      {:ok, [["a", "b"], ["c", "d"]]}
-
-      iex> Infrastructure.InputFileLoader.get_parsed_lines("nonexistent.txt")
-      {:error, :enoent}
+    # Example with an invalid file path
+    iex> Infrastructure.InputFileLoader.get_parsed_lines("non_existent.txt")
+    {:error, :enoent}
   """
   @spec get_parsed_lines(binary(), Regex.t(), String.t()) ::
           {:ok, list(list(binary()))} | {:error, any()}
