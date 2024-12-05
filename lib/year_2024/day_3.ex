@@ -12,5 +12,13 @@ defmodule Year2024.Day3 do
   def part_1, do: solve(@data_path_part_1, @mul_instructions_regex)
 
   defp solve(path, regex) do
+    path
+    |> File.stream!()
+    |> Stream.flat_map(&Regex.scan(regex, &1))
+    |> Stream.map(fn [_full_match, fst_num, snd_num] ->
+      {String.to_integer(fst_num), String.to_integer(snd_num)}
+    end)
+    |> Stream.map(fn {fst, snd} -> fst * snd end)
+    |> Enum.sum()
   end
 end
