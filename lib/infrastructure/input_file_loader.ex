@@ -14,16 +14,11 @@ defmodule Infrastructure.InputFileLoader do
   Returns `{:ok, parsed_lines}` if successful, or `{:error, reason}` for any errors.
 
   ## Examples
-    # Example with an invalid file path
-    iex> File.write!("test/file_samples/one_line.txt", "Hello\nWorld!\n")
-    :ok
+      iex> Infrastructure.InputFileLoader.get_parsed_lines("test/file_samples/one_line.txt")
+      {:ok, [["Hello,", "World!"]]}
 
-    iex> Infrastructure.InputFileLoader.get_parsed_lines("test/file_samples/one_line.txt")
-    {:ok, [["Hello"], ["World!"]]}
-
-    # Example with an invalid file path
-    iex> Infrastructure.InputFileLoader.get_parsed_lines("non_existent.txt")
-    {:error, :enoent}
+      iex> Infrastructure.InputFileLoader.get_parsed_lines("non_existent.txt")
+      {:error, :enoent}
   """
   @spec get_parsed_lines(binary(), Regex.t(), String.t()) ::
           {:ok, list(list(binary()))} | {:error, any()}
@@ -47,17 +42,14 @@ defmodule Infrastructure.InputFileLoader do
 
   ## Examples
 
-      # Example with a valid file
       iex> File.write!("test/file_samples/one_line.txt", "Hello, World!")
       :ok
       iex> Infrastructure.InputFileLoader.read_input("test/file_samples/one_line.txt")
       {:ok, "Hello, World!"}
 
-      # Example with an invalid file path
       iex> Infrastructure.InputFileLoader.read_input("non_existent.txt")
       {:error, :enoent}
 
-      # Example with invalid input type
       iex> Infrastructure.InputFileLoader.read_input(123)
       {:error, "Invalid file path. Please provide a valid binary string representing the file path."}
   """

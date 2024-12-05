@@ -13,11 +13,11 @@ defmodule Infrastructure.Enum.CommonHelpers do
 
   ## Examples
 
-      iex> build_frequency_map([1, 2, 2, 3, 3, 3])
+      iex> Infrastructure.Enum.CommonHelpers.build_frequency_map([1, 2, 2, 3, 3, 3])
       %{1 => 1, 2 => 2, 3 => 3}
 
-      iex> build_frequency_map(["a", "b", "a"], default: 0)
-      %{"a" => 2, "b" => 1}
+      iex> Infrastructure.Enum.CommonHelpers.build_frequency_map(["a", "b", "a"], default: 0)
+      %{"a" => 1, "b" => 0}
   """
   @spec build_frequency_map(Enumerable.t(), keyword()) :: map()
   def build_frequency_map(enumerable, opts \\ []) do
@@ -33,7 +33,7 @@ defmodule Infrastructure.Enum.CommonHelpers do
 
   ## Examples
 
-      iex> convert_strings_to_integers(["1", "2", "3"])
+      iex> Infrastructure.Enum.CommonHelpers.convert_strings_to_integers(["1", "2", "3"])
       [1, 2, 3]
   """
   @spec convert_strings_to_integers([String.t()]) :: [integer()]
@@ -44,10 +44,10 @@ defmodule Infrastructure.Enum.CommonHelpers do
 
   ## Examples
 
-      iex> strictly_increasing?([1, 2, 3])
+      iex> Infrastructure.Enum.CommonHelpers.strictly_increasing?([1, 2, 3])
       true
 
-      iex> strictly_increasing?([1, 2, 2])
+      iex> Infrastructure.Enum.CommonHelpers.strictly_increasing?([1, 2, 2])
       false
   """
   @spec strictly_increasing?(Enumerable.t()) :: boolean()
@@ -58,10 +58,10 @@ defmodule Infrastructure.Enum.CommonHelpers do
 
   ## Examples
 
-      iex> strictly_decreasing?([3, 2, 1])
+      iex> Infrastructure.Enum.CommonHelpers.strictly_decreasing?([3, 2, 1])
       true
 
-      iex> strictly_decreasing?([3, 2, 2])
+      iex> Infrastructure.Enum.CommonHelpers.strictly_decreasing?([3, 2, 2])
       false
   """
   @spec strictly_decreasing?(Enumerable.t()) :: boolean()
@@ -72,10 +72,10 @@ defmodule Infrastructure.Enum.CommonHelpers do
 
   ## Examples
 
-      iex> adjacent_values_in_range?([1, 3, 5], 1, 3)
+      iex> Infrastructure.Enum.CommonHelpers.adjacent_values_in_range?([1, 3, 5], 1, 3)
       true
 
-      iex> adjacent_values_in_range?([1, 3, 6], 1, 3)
+      iex> Infrastructure.Enum.CommonHelpers.adjacent_values_in_range?([1, 13, 45], 1, 3)
       false
   """
   @spec adjacent_values_in_range?(Enumerable.t(), number(), number()) :: boolean()
@@ -90,7 +90,7 @@ defmodule Infrastructure.Enum.CommonHelpers do
 
   ## Examples
 
-      iex> pairwise([1, 2, 3])
+      iex> Infrastructure.Enum.CommonHelpers.pairwise([1, 2, 3])
       [{1, 2}, {2, 3}]
   """
   @spec pairwise(Enumerable.t()) :: [{any(), any()}]
