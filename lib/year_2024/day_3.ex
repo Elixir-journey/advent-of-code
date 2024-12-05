@@ -9,16 +9,26 @@ defmodule Year2024.Day3 do
   @doc """
   Sum the results of all uncorrupted multiplication instructions from the rental shop computer memory logs.
   """
-  def part_1, do: solve(@data_path_part_1, @mul_instructions_regex)
+  def part_1,
+    do: solve(@data_path_part_1, @mul_instructions_regex, process_valid_mul_instructions())
 
-  defp solve(path, regex) do
+  def solve(path, regex, transform) do
     path
     |> File.stream!()
     |> Stream.flat_map(&Regex.scan(regex, &1))
-    |> Stream.map(fn [_full_match, fst_num, snd_num] ->
-      {String.to_integer(fst_num), String.to_integer(snd_num)}
-    end)
-    |> Stream.map(fn {fst, snd} -> fst * snd end)
+    |> Stream.transform(nil, transform)
     |> Enum.sum()
+  end
+
+  defp process_valid_mul_instructions do
+    fn
+      # The regex should already check that we get a valid mul instructions.
+      ["mul(" <> _, x, y], nil ->
+        {[String.to_integer(x) * String.to_integer(y)], nil}
+
+      # ignore unrecognized input
+      _other, state ->
+        {[], state}
+    end
   end
 end
