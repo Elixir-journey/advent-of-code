@@ -14,12 +14,12 @@ defmodule Year2024.Day2 do
   @doc """
   Count the number of safe reports for Part 1.
   """
-  def part_1, do: solve(@data_path_part_1, &is_safe_report/1)
+  def part_1, do: solve(@data_path_part_1, &safe_reports?/1)
 
   @doc """
   Count the number of safe reports for Part 2.
   """
-  def part_2, do: solve(@data_path_part_2, &is_safe_with_tolerance/1)
+  def part_2, do: solve(@data_path_part_2, &safe_with_tolerance?/1)
 
   defp solve(path, filter) do
     path
@@ -36,19 +36,19 @@ defmodule Year2024.Day2 do
     end
   end
 
-  defp is_safe_report(levels) do
-    is_monotonic?(levels) and adjacent_differences_in_range?(levels)
+  defp safe_reports?(levels) do
+    monotonic?(levels) and adjacent_differences_in_range?(levels)
   end
 
-  defp is_safe_with_tolerance(levels) do
+  def safe_with_tolerance?(levels) do
     Enum.any?(0..(length(levels) - 1), fn index ->
       levels
       |> List.delete_at(index)
-      |> is_safe_report()
+      |> safe_reports?()
     end)
   end
 
-  defp is_monotonic?(levels) do
+  defp monotonic?(levels) do
     pairs = pairwise(levels)
 
     Enum.all?(pairs, fn {a, b} -> a <= b end) or
