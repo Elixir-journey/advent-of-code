@@ -31,7 +31,9 @@ defmodule AdventOfCode.MixProject do
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.34", only: :dev, runtime: false},
       {:mix_audit, "~> 2.1"},
-      {:sobelow, "~> 0.13.0"}
+      {:sobelow, "~> 0.13.0"},
+      {:tesla, "~> 1.8"},
+      {:hackney, "~> 1.18"}
     ]
   end
 end
