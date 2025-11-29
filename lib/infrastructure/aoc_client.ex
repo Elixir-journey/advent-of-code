@@ -6,8 +6,6 @@ defmodule Infrastructure.AocClient do
   @base_url "https://adventofcode.com"
   @title_regex ~r/<h2>--- Day \d+: (?<title>.+?) ---<\/h2>/
 
-  @title_regex ~r/<h2>--- Day \d+: (?<title>.+?) ---<\/h2>/
-
   @doc """
   Fetches the puzzle input for a given year and day.
   """
