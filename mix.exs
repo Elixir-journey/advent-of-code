@@ -1,4 +1,4 @@
-defmodule TemplateApplication.MixProject do
+defmodule AdventOfCode.MixProject do
   use Mix.Project
 
   def project do
@@ -18,7 +18,7 @@ defmodule TemplateApplication.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      mod: {ElixirKickoff.Application, []},
+      mod: {AdventOfCode.Application, []},
       extra_applications: [:logger]
     ]
   end
@@ -31,7 +31,9 @@ defmodule TemplateApplication.MixProject do
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.34", only: :dev, runtime: false},
       {:mix_audit, "~> 2.1"},
-      {:sobelow, "~> 0.13.0"}
+      {:sobelow, "~> 0.13.0"},
+      {:tesla, "~> 1.8"},
+      {:hackney, "~> 1.18"}
     ]
   end
 end

@@ -8,7 +8,7 @@ defmodule Year2024.Day2 do
   @min_diff 1
   @max_diff 3
 
-  alias Infrastructure.InputFileLoader
+  alias Infrastructure.FileIO.InputFileLoader
   import Infrastructure.Enum.CommonHelpers, only: [convert_strings_to_integers: 1, pairwise: 1]
 
   @doc """

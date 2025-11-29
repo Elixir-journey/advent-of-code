@@ -13,7 +13,7 @@ defmodule Year2024.Day1 do
   @data_path_part_2 "lib/inputs/2024/day_1/part_2.txt"
 
   import Infrastructure.Enum.CommonHelpers, only: [build_frequency_map: 1]
-  alias Infrastructure.InputFileLoader
+  alias Infrastructure.FileIO.InputFileLoader
 
   @doc """
   Calculates the sum of absolute differences for Part 1.

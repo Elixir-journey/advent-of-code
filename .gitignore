@@ -40,3 +40,6 @@ erl_crash.dump
 
 # Log files
 *.log
+
+# Advent of Code session cookies
+.aoc_session
