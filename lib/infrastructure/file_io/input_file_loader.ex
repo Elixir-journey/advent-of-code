@@ -1,4 +1,4 @@
-defmodule Infrastructure.InputFileLoader do
+defmodule Infrastructure.FileIO.InputFileLoader do
   @moduledoc """
   A utility module for reading input files for Advent of Code challenges.
   """
