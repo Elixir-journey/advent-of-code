@@ -14,10 +14,10 @@ defmodule Infrastructure.FileIO.InputFileLoader do
   Returns `{:ok, parsed_lines}` if successful, or `{:error, reason}` for any errors.
 
   ## Examples
-      iex> Infrastructure.InputFileLoader.get_parsed_lines("test/file_samples/one_line.txt")
+      iex> Infrastructure.FileIO.InputFileLoader.get_parsed_lines("test/file_samples/one_line.txt")
       {:ok, [["Hello,", "World!"]]}
 
-      iex> Infrastructure.InputFileLoader.get_parsed_lines("non_existent.txt")
+      iex> Infrastructure.FileIO.InputFileLoader.get_parsed_lines("non_existent.txt")
       {:error, :enoent}
   """
   @spec get_parsed_lines(binary(), Regex.t(), String.t()) ::
@@ -44,13 +44,13 @@ defmodule Infrastructure.FileIO.InputFileLoader do
 
       iex> File.write!("test/file_samples/one_line.txt", "Hello, World!")
       :ok
-      iex> Infrastructure.InputFileLoader.read_input("test/file_samples/one_line.txt")
+      iex> Infrastructure.FileIO.InputFileLoader.read_input("test/file_samples/one_line.txt")
       {:ok, "Hello, World!"}
 
-      iex> Infrastructure.InputFileLoader.read_input("non_existent.txt")
+      iex> Infrastructure.FileIO.InputFileLoader.read_input("non_existent.txt")
       {:error, :enoent}
 
-      iex> Infrastructure.InputFileLoader.read_input(123)
+      iex> Infrastructure.FileIO.InputFileLoader.read_input(123)
       {:error, "Invalid file path. Please provide a valid binary string representing the file path."}
   """
   @spec read_input(binary()) :: {:ok, binary()} | {:error, any()}
@@ -79,18 +79,18 @@ defmodule Infrastructure.FileIO.InputFileLoader do
   ## Examples
 
       iex> text = "1 2\\n3 4\\n"
-      iex> Infrastructure.InputFileLoader.extract_lines_from_text(text)
+      iex> Infrastructure.FileIO.InputFileLoader.extract_lines_from_text(text)
       {:ok, [["1", "2"], ["3", "4"]]}
 
       iex> text = "a,b\\nc,d\\n"
-      iex> Infrastructure.InputFileLoader.extract_lines_from_text(text, ~r/,/)
+      iex> Infrastructure.FileIO.InputFileLoader.extract_lines_from_text(text, ~r/,/)
       {:ok, [["a", "b"], ["c", "d"]]}
 
       iex> text = "1;2;3|4;5;6"
-      iex> Infrastructure.InputFileLoader.extract_lines_from_text(text, ~r/;/, "|")
+      iex> Infrastructure.FileIO.InputFileLoader.extract_lines_from_text(text, ~r/;/, "|")
       {:ok, [["1", "2", "3"], ["4", "5", "6"]]}
 
-      iex> Infrastructure.InputFileLoader.extract_lines_from_text(123)
+      iex> Infrastructure.FileIO.InputFileLoader.extract_lines_from_text(123)
       {:error, "Invalid input. Expected a binary string for text and split_separator."}
   """
   @spec extract_lines_from_text(binary(), Regex.t(), String.t()) ::

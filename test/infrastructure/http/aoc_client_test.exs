@@ -1,7 +1,7 @@
-defmodule Infrastructure.AocClientTest do
+defmodule Infrastructure.Http.AocClientTest do
   use ExUnit.Case, async: false
 
-  alias Infrastructure.AocClient
+  alias Infrastructure.Http.AocClient
 
   # These hit real AoC - skip in CI, run manually
   @moduletag :integration
