@@ -1,9 +1,9 @@
 # test/elixir_kickoff_application_test.exs
-defmodule ElixirKickoffApplicationTest do
+defmodule AdventOfCodeApplicationTest do
   use ExUnit.Case
 
   @moduledoc """
-  Tests for the ElixirKickoff.Application module.
+  Tests for the AdventOfCode.Application module.
   """
 
   test "ensures the application starts correctly" do

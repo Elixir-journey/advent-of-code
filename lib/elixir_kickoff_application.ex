@@ -1,6 +1,6 @@
-defmodule ElixirKickoff.Application do
+defmodule AdventOfCode.Application do
   @moduledoc """
-  The main application module for ElixirKickoff.
+  The main application module for AdventOfCode.
 
   This module is the entry point for starting the application. It initializes
   the supervision tree and logs a message when the application starts in the container.
