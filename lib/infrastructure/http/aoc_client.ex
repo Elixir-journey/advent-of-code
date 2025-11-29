@@ -1,4 +1,4 @@
-defmodule Infrastructure.AocClient do
+defmodule Infrastructure.Http.AocClient do
   @moduledoc """
   HTTP client for adventofcode.com
   """
@@ -39,17 +39,16 @@ defmodule Infrastructure.AocClient do
   defp trim_body({:ok, body}), do: {:ok, String.trim(body)}
   defp trim_body(error), do: error
 
-  defp request(path) do
-    Tesla.get(client(), path)
-  end
+  defp request(path), do: Tesla.get(client(), path)
 
   defp client do
+    adapter = get_tesla_adapter()
+
     middleware = [
       {Tesla.Middleware.BaseUrl, @base_url},
       {Tesla.Middleware.Headers, [{"cookie", "session=#{session_cookie()}"}]}
     ]
 
-    adapter = Application.get_env(:tesla, :adapter)
     Tesla.client(middleware, adapter)
   end
 
@@ -64,6 +63,8 @@ defmodule Infrastructure.AocClient do
 
   defp session_cookie do
     System.get_env("AOC_SESSION_COOKIE") ||
-      File.read!(Path.join(File.cwd!(), ".aoc_session")) |> String.trim()
+      Infrastructure.FileIO.ConfigLoader.read_root_file!(".aoc_session")
   end
+
+  defp get_tesla_adapter, do: Application.get_env(:tesla, :adapter)
 end
