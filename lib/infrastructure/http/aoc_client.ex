@@ -3,6 +3,8 @@ defmodule Infrastructure.Http.AocClient do
   HTTP client for adventofcode.com
   """
 
+  alias Infrastructure.FileIO.ConfigLoader
+
   @base_url "https://adventofcode.com"
   @title_regex ~r/<h2>--- Day \d+: (?<title>.+?) ---<\/h2>/
 
@@ -63,7 +65,7 @@ defmodule Infrastructure.Http.AocClient do
 
   defp session_cookie do
     System.get_env("AOC_SESSION_COOKIE") ||
-      Infrastructure.FileIO.ConfigLoader.read_root_file!(".aoc_session")
+      ConfigLoader.read_root_file!(".aoc_session")
   end
 
   defp get_tesla_adapter, do: Application.get_env(:tesla, :adapter)
