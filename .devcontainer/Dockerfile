@@ -1,5 +1,5 @@
 # Use an official Elixir image as the base
-FROM elixir:1.17-alpine
+FROM elixir:1.19-alpine
 
 # Set default environment to development
 ENV MIX_ENV=dev
