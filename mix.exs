@@ -41,8 +41,7 @@ defmodule AdventOfCode.MixProject do
   defp dialyzer do
     [
       plt_add_deps: :app_tree,
-      plt_add_apps: [:mix, :ex_unit],
-      ignore_warnings: "dialyzer.ignore-warnings"
+      plt_add_apps: [:mix, :ex_unit]
     ]
   end
 end
