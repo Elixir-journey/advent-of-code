@@ -1,78 +1,78 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
 
 jobs:
-  linting:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the code
-        uses: actions/checkout@v4
+    linting:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out the code
+              uses: actions/checkout@v4
 
-      - name: Set up Elixir
-        id: setup-beam
-        uses: erlef/setup-beam@v1
-        with:
-          elixir-version: '1.17'
-          otp-version: '27.1.2'
+            - name: Set up Elixir
+              id: setup-beam
+              uses: erlef/setup-beam@v1
+              with:
+                  elixir-version: "1.19"
+                  otp-version: "28.1"
 
-      - name: Restore dependencies cache
-        uses: actions/cache@v4
-        with:
-          path: deps
-          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-mix-
+            - name: Restore dependencies cache
+              uses: actions/cache@v4
+              with:
+                  path: deps
+                  key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-mix-
 
-      - name: Install dependencies
-        run: mix deps.get
+            - name: Install dependencies
+              run: mix deps.get
 
-      - name: Cache PLT files
-        uses: actions/cache@v4
-        with:
-          path: |
-            _build/dev/*.plt
-            _build/dev/*.plt.hash
-          key: plt-${{ runner.os }}-${{ hashFiles('mix.lock') }}-${{ hashFiles('.tool-versions') }}
-          restore-keys: |
-            plt-${{ runner.os }}-${{ hashFiles('mix.lock') }}-
-            plt-${{ runner.os }}-
+            - name: Cache PLT files
+              uses: actions/cache@v4
+              with:
+                  path: |
+                      _build/dev/*.plt
+                      _build/dev/*.plt.hash
+                  key: plt-${{ runner.os }}-${{ hashFiles('mix.lock') }}-${{ hashFiles('.tool-versions') }}
+                  restore-keys: |
+                      plt-${{ runner.os }}-${{ hashFiles('mix.lock') }}-
+                      plt-${{ runner.os }}-
 
-      - name: Run Dialyzer
-        run: mix dialyzer
+            - name: Run Dialyzer
+              run: mix dialyzer
 
-      - name: Run mix_audit for dependency vulnerabilities
-        run: mix deps.audit
+            - name: Run mix_audit for dependency vulnerabilities
+              run: mix deps.audit
 
-      - name: Run formatter check
-        run: mix format --check-formatted
+            - name: Run formatter check
+              run: mix format --check-formatted
 
-      - name: Run Credo for linting
-        run: mix credo --strict
+            - name: Run Credo for linting
+              run: mix credo --strict
 
-      - name: Run Sobelow for security analysis
-        run: mix sobelow --config
+            - name: Run Sobelow for security analysis
+              run: mix sobelow --config
 
-  testing:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the code
-        uses: actions/checkout@v4
+    testing:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out the code
+              uses: actions/checkout@v4
 
-      - name: Set up Elixir
-        uses: erlef/setup-beam@v1
-        with:
-          elixir-version: '1.17'
-          otp-version: '27.1.2'
+            - name: Set up Elixir
+              uses: erlef/setup-beam@v1
+              with:
+                  elixir-version: "1.19"
+                  otp-version: "28.1"
 
-      - name: Install dependencies (if not cached)
-        run: mix deps.get
+            - name: Install dependencies (if not cached)
+              run: mix deps.get
 
-      - name: Run tests
-        run: mix test
+            - name: Run tests
+              run: mix test

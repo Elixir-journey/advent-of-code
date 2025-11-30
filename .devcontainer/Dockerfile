@@ -1,7 +1,4 @@
-# Use an official Elixir image as the base
-FROM elixir:1.17-alpine
-
-# Set default environment to development
+FROM elixir:1.19.3-otp-28-alpine
 ENV MIX_ENV=dev
 
 # Install Hex, Rebar, and essential tools
@@ -16,14 +13,11 @@ RUN mix do local.hex --force, local.rebar --force \
     openssh \
     postgresql-client
 
-# Set up the application directory
 WORKDIR /workspace
 
-# Copy mix files and install dependencies
 COPY mix.exs mix.lock ./
 RUN mix deps.get --only $MIX_ENV
 
-# Copy the rest of the application code
 COPY . .
 
 # Run compilation in development mode
