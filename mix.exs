@@ -6,7 +6,7 @@ defmodule AdventOfCode.MixProject do
       app: :adventofcode,
       name: "AoC Solutions",
       version: "0.1.0",
-      elixir: "~> 1.17",
+      elixir: "~> 1.19",
       start_permanent: Mix.env() == :dev,
       deps: deps(),
       dialyzer: dialyzer(),
@@ -27,14 +27,14 @@ defmodule AdventOfCode.MixProject do
 
   defp deps do
     [
-      {:jason, "~> 1.3"},
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
+      {:jason, "~> 1.4"},
+      {:credo, "~> 1.7.13", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.4", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.34", only: :dev, runtime: false},
       {:mix_audit, "~> 2.1"},
-      {:sobelow, "~> 0.13.0"},
-      {:tesla, "~> 1.8"},
-      {:hackney, "~> 1.18"}
+      {:sobelow, "~> 0.14.0"},
+      {:tesla, "~> 1.15"},
+      {:hackney, "~> 1.25"}
     ]
   end
 
