@@ -15,7 +15,7 @@
 
 # Mix-generated files
 *.ez  # Archive artifacts (mix archive.build)
-template_application-*.tar  # Package tarball (mix hex.build)
+adventofcode-*.tar  # Package tarball (mix hex.build)
 .fetch  # Dependency fetch marker
 
 # Crash dump and temporary files
