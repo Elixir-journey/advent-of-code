@@ -1,16 +1,22 @@
-# Elixir kickoff
-![Build Status](https://github.com/Elixir-journey/elixir-kickoff/actions/workflows/ci.yml/badge.svg)
-![Code Style](https://img.shields.io/badge/style-credo-blue)
-![License](https://img.shields.io/github/license/Elixir-journey/elixir-kickoff)
+# Advent of Code Solutions
 
-This repository is a general-purpose Elixir project template designed to help you quickly start new projects. It includes essential configurations and Docker support.
+![Build Status](https://github.com/Elixir-journey/advent-of-code/actions/workflows/ci.yml/badge.svg)
+![Elixir](https://img.shields.io/badge/elixir-1.19-purple)
+![License](https://img.shields.io/github/license/Elixir-journey/advent-of-code)
 
-## Features
+My solutions to [Advent of Code](https://adventofcode.com/) challenges, implemented in Elixir.
 
-- Basic Elixir setup with recommendations for commonly used dependencies.
-- Docker support for running the application in an isolated environment.
-- Dev Container for a fully configured, consistent development environment.
-- Linting, documentation generation, and optional performance testing setup.
+## Project Structure
+```
+lib/
+├── year_YYYY/
+│   └── day_N.ex        # Solutions for each day
+├── infrastructure/     # Shared utilities
+│   ├── common_helpers.ex
+│   └── input_file_loader.ex
+└── mix/tasks/          # Custom mix tasks
+    ├── setup_day_challenge.ex
+```
 
 ## Getting Started
 
@@ -34,74 +40,33 @@ It enforces best practices and code consistency by highlighting potential readab
 It analyzes code for type errors and potential bugs, offering an additional layer of safety. Dialyzer is integrated with ElixirLS, running in the background and reporting issues as you work.
 The initial setup may take a few minutes, as it builds a PLT (Persistent Lookup Table) with necessary type information.
 
-#### Development with devcontainers
+### Development with Dev Containers
 
-##### Requirements
-
-- [Docker](https://www.docker.com) (for running containers)
+**Requirements:**
+- [Docker](https://www.docker.com)
 - [Visual Studio Code](https://code.visualstudio.com)
 - [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
-If using Visual Studio Code, elixir-kickoff provides a fully configured devcontainer environment. This setup ensures that all necessary tools (Elixir, Erlang, Hex, Rebar) are installed and available without any additional local setup.
+1. Open the project in VS Code
+2. Select "Reopen in Container" when prompted (or use Command Palette: `Dev Containers: Reopen in Container`)
+3. Dependencies install automatically via `postCreateCommand`
 
-1. Open the project in VS Code.
-2. You should see a prompt: "Reopen in Container". Select it to open the project in the Dev Container. Alternatively, open the Command Palette (Ctrl+Shift+P or Cmd+Shift+P) and search for ```Remote-Containers: Reopen in Container```.
-3. Once inside the container, install dependencies and run the application:
+### Running Locally (without Dev Containers)
 
+Requires [Elixir 1.19+](https://elixir-lang.org/install.html) with OTP 28.
 ```bash
 mix deps.get
-mix run --no-halt
 ```
 
-#### Customization and Configuration
+## Usage
 
-The Dev Container uses a pre-built Docker image for faster setup and consistent environments across all sessions. The image is hosted on GitHub Container Registry at [ghcr.io/elixir-journey/elixir-kickoff:latest](https://github.com/orgs/Elixir-journey/packages/container/package/elixir-kickoff).
-
-Extensions: The following VS Code extensions are automatically installed:
-- Elixir Language Server (Elixir LS)
-- Docker
-- GitLens
-- Spell Checker
-- Prettier (for code formatting)
-- Material Icon Theme
-
-You can modify the .devcontainer/devcontainer.json file to add extensions or dependencies.
-
-### Running without devcontainers
-If you’re not using devcontainers, you must have [Elixir and Erlang installed locally](https://elixir-lang.org/install.html). After installation, follow the same setup steps as above to fetch dependencies and start the application.
-
-### Using Docker
-
-The repository includes a Dockerfile that allows you to run the application in a container.
-
-1. Build the Docker image
-
+### Scaffold a New Day
 ```bash
-docker build -t elixir-kickoff .
+mix setup_day_challenge 2025 1
 ```
 
-2. Run the container
+Creates `lib/year_2025/day_1.ex` and `lib/year_2025/inputs/day_1/input.txt`.
 
-```bash
-docker run elixir-kickoff
-```
+## License
 
-## Code style & editor configuration
-This project uses an .editorconfig file to ensure consistent coding standards across different editors and environments. The .editorconfig file helps maintain consistent formatting for:
-
-- Indentation: Spaces with a width of 4.
-- Line endings: LF (Line Feed) for cross-platform compatibility.
-- Trimming trailing whitespace and final newline insertion for cleaner diffs.
-
-### How It Works
-
-If you’re using Visual Studio Code or another modern editor, the settings will be applied automatically if you have [EditorConfig support](https://editorconfig.org). The VS Code Dev Container setup includes this support by default, so no extra setup is needed.
-
-## Development Notes
-
-- Environment Variables: Use .env files to manage environment variables. Make sure they are listed in .gitignore to keep sensitive information secure.
-- Linting and Formatting: Run Credo for linting and mix format to ensure code consistency.
-Contributing
-
-## Contributing
-Feel free to submit a pull request or open an issue if you have improvement suggestions.
+See [LICENSE](LICENSE) for details.
