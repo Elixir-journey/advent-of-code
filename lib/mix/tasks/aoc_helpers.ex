@@ -1,4 +1,5 @@
 defmodule Mix.Tasks.AocHelpers do
+  @moduledoc false
   def parse_args([year_str, day_str]) do
     with {year, ""} <- Integer.parse(year_str),
          {day, ""} <- Integer.parse(day_str),
