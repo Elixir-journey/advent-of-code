@@ -16,6 +16,7 @@ lib/
 │   └── input_file_loader.ex
 └── mix/tasks/          # Custom mix tasks
     ├── setup_day_challenge.ex
+    └── run_day_challenge.ex
 ```
 
 ## Getting Started
@@ -60,12 +61,27 @@ mix deps.get
 
 ## Usage
 
-### Scaffold a New Day
+### Scaffold a new AoC day
 ```bash
 mix setup_day_challenge 2025 1
 ```
 
 Creates `lib/year_2025/day_1.ex`, `test/year_2025/day_1_test.exs` and `lib/year_2025/inputs/day_1/input.txt`.
+
+### Running an AoC day
+```bash
+mix run_day_challenge 2025 1
+```
+
+Running the mix task will run each part of the day (if available) otherwise, we can pass a part. The output will generate something like
+
+```markdown
+Part 1: 1011
+  Time: 2.52 ms
+
+Part 2: 5937
+  Time: 610.0 µs
+```
 
 ## License
 
