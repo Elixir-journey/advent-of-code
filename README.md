@@ -65,7 +65,7 @@ mix deps.get
 mix setup_day_challenge 2025 1
 ```
 
-Creates `lib/year_2025/day_1.ex` and `lib/year_2025/inputs/day_1/input.txt`.
+Creates `lib/year_2025/day_1.ex`, `test/year_2025/day_1_test.exs` and `lib/year_2025/inputs/day_1/input.txt`.
 
 ## License
 
