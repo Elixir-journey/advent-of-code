@@ -27,23 +27,23 @@ defmodule Year2025.Day1Test do
     end
   end
 
-  describe "solve_part_1/1" do
+  describe "door_lock_combination_code/1" do
     test "counts zeros with sample input" do
-      assert Day1.solve_part_1(@sample_input) == 3
+      assert Day1.door_lock_combination_code(@sample_input) == 3
     end
 
     test "returns 0 when dial never lands on 0" do
-      assert Day1.solve_part_1("R1\nL1") == 0
+      assert Day1.door_lock_combination_code("R1\nL1") == 0
     end
 
     test "counts landing on 0 from wrap-around" do
       # Start at 50, L55 -> 95, R5 -> 0
-      assert Day1.solve_part_1("L55\nR5") == 1
+      assert Day1.door_lock_combination_code("L55\nR5") == 1
     end
 
     test "handles large rotations" do
       # Start at 50, R9950 -> 0 (9950 + 50 = 10000, mod 100 = 0)
-      assert Day1.solve_part_1("R9950") == 1
+      assert Day1.door_lock_combination_code("R9950") == 1
     end
   end
 
