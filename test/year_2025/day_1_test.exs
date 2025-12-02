@@ -1,8 +1,9 @@
 defmodule Year2025.Day1Test do
   use ExUnit.Case, async: true
+
   doctest Year2025.Day1
 
-  alias Year2025.Day1
+  import Year2025.Day1
 
   @sample_input """
   L68
@@ -17,45 +18,117 @@ defmodule Year2025.Day1Test do
   L82
   """
 
-  describe "parse/1" do
-    test "parses L as negative, R as positive" do
-      assert Day1.parse("L10\nR5\nL100") == [-10, 5, -100]
+  describe "count_landings_at_zero/1" do
+    test "counts positions that land exactly on zero" do
+      assert count_landings_at_zero(@sample_input) == 3
     end
 
-    test "parses sample input" do
-      assert Day1.parse(@sample_input) == [-68, -30, 48, -5, 60, -55, -1, -99, 14, -82]
+    test "returns zero when no rotations land on zero" do
+      input = "R10\nL5\nR3"
+      assert count_landings_at_zero(input) == 0
+    end
+
+    test "handles single rotation landing on zero" do
+      input = "R50"
+      assert count_landings_at_zero(input) == 1
     end
   end
 
-  describe "count_landings_at_zero/1" do
-    test "counts zeros with sample input" do
-      assert Day1.count_landings_at_zero(@sample_input) == 3
+  describe "count_all_times_at_zero/1" do
+    test "counts landings plus pass-throughs" do
+      assert count_all_times_at_zero(@sample_input) == 6
     end
 
-    test "returns 0 when dial never lands on 0" do
-      assert Day1.count_landings_at_zero("R1\nL1") == 0
+    test "counts multiple pass-throughs in large rotation" do
+      input = "R250"
+      assert count_all_times_at_zero(input) == 3
     end
 
-    test "counts landing on 0 from wrap-around" do
-      # Start at 50, L55 -> 95, R5 -> 0
-      assert Day1.count_landings_at_zero("L55\nR5") == 1
+    test "does not count starting position" do
+      input = "L50\nL5"
+      assert count_all_times_at_zero(input) == 1
+    end
+  end
+
+  describe "count_zeros_in_rotation/2" do
+    test "moving right, passes through zero" do
+      assert count_zeros_in_rotation(95, 60) == 1
     end
 
-    test "handles large rotations" do
-      # Start at 50, R9950 -> 0 (9950 + 50 = 10000, mod 100 = 0)
-      assert Day1.count_landings_at_zero("R9950") == 1
+    test "moving right, lands exactly on zero" do
+      assert count_zeros_in_rotation(52, 48) == 1
+    end
+
+    test "moving right, does not reach zero" do
+      assert count_zeros_in_rotation(50, 30) == 0
+    end
+
+    test "moving right, multiple crossings" do
+      assert count_zeros_in_rotation(95, 205) == 3
+    end
+
+    test "moving left, passes through zero" do
+      assert count_zeros_in_rotation(50, -68) == 1
+    end
+
+    test "moving left, does not reach zero" do
+      assert count_zeros_in_rotation(82, -30) == 0
+    end
+
+    test "moving left, starting at zero does not count" do
+      assert count_zeros_in_rotation(0, -5) == 0
+    end
+
+    test "moving left, starting at zero with full rotation" do
+      assert count_zeros_in_rotation(0, -100) == 1
+    end
+
+    test "no movement" do
+      assert count_zeros_in_rotation(50, 0) == 0
+    end
+  end
+
+  describe "parse/1" do
+    test "parses left rotations as negative" do
+      assert parse("L10\nL25") == [-10, -25]
+    end
+
+    test "parses right rotations as positive" do
+      assert parse("R10\nR25") == [10, 25]
+    end
+
+    test "parses mixed rotations" do
+      assert parse("L68\nR30\nL5") == [-68, 30, -5]
+    end
+
+    test "handles trailing newline" do
+      assert parse("L10\nR5\n") == [-10, 5]
+    end
+  end
+
+  describe "dial_positions/1" do
+    test "tracks positions after each rotation" do
+      assert dial_positions([-68, -30, 48]) == [82, 52, 0]
+    end
+
+    test "wraps around correctly going right" do
+      assert dial_positions([60]) == [10]
+    end
+
+    test "wraps around correctly going left" do
+      assert dial_positions([-60]) == [90]
     end
   end
 
   describe "solutions" do
     @tag :solution
     test "part 1" do
-      assert Day1.part_1() == 1011
+      assert part_1() == 1011
     end
 
     @tag :solution
     test "part 2" do
-      assert Day1.part_2() == 5937
+      assert part_2() == 5937
     end
   end
 end

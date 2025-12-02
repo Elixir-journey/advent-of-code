@@ -88,23 +88,8 @@ defmodule Year2025.Day1 do
   Includes landing on 0, but not starting on 0.
 
   ## Examples
-      iex> Year2025.Day1.count_zeros_in_rotation(0, -5)    # L5: starts at 0, doesn't count
-      0
-
       iex> Year2025.Day1.count_zeros_in_rotation(50, -68)  # L68: passes through 0
       1
-
-      iex> Year2025.Day1.count_zeros_in_rotation(82, -30)  # L30: 82 → 52, no zero
-      0
-
-      iex> Year2025.Day1.count_zeros_in_rotation(52, 48)   # R48: lands on 0
-      1
-
-      iex> Year2025.Day1.count_zeros_in_rotation(95, 60)   # R60: passes through 0
-      1
-
-      iex> Year2025.Day1.count_zeros_in_rotation(95, 205)  # R205: passes through 0 three times
-      3
   """
   @spec count_zeros_in_rotation(non_neg_integer(), integer()) :: non_neg_integer()
   def count_zeros_in_rotation(start, rotation) when rotation > 0 do
