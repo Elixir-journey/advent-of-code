@@ -94,8 +94,12 @@ defmodule Year2025.Day2 do
 
   defp solve_for_part(ranges, part) do
     ranges
-    |> Enum.map(&sum_invalid_ids_in_range(&1, part))
-    |> Enum.sum()
+    |> Task.async_stream(
+      &sum_invalid_ids_in_range(&1, part),
+      max_concurrency: System.schedulers_online(),
+      ordered: false
+    )
+    |> Enum.reduce(0, fn {:ok, sum}, acc -> acc + sum end)
   end
 
   defp parse_range(range_string) do
@@ -142,8 +146,7 @@ defmodule Year2025.Day2 do
     max_pattern_len = div(len, 2)
 
     max_pattern_len >= 1 and
-      Enum.any?(1..max_pattern_len, fn pattern_len ->
-        # Skip if this pattern length doesn't divide evenly (e.g., 3 into 10)
+      Enum.any?(1..max_pattern_len//1, fn pattern_len ->
         rem(len, pattern_len) == 0 and repeats_digit_pattern?(digits, pattern_len)
       end)
   end
