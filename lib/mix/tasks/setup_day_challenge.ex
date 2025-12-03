@@ -14,8 +14,7 @@ defmodule Mix.Tasks.SetupDayChallenge do
   ## What it creates
 
   - `lib/year_YEAR/day_DAY.ex` - Solution module with template
-  - `lib/inputs/YEAR/day_DAY/part_1.txt` - Puzzle input (fetched from AoC)
-  - `lib/inputs/YEAR/day_DAY/part_2.txt` - Copy for part 2 (same input)
+  - `lib/inputs/YEAR/day_DAY/input.txt` - Puzzle input (fetched from AoC)
   - `test/year_YEAR/day_DAY_test.exs` - Test file with sample structure
 
   ## Requirements
@@ -69,14 +68,13 @@ defmodule Mix.Tasks.SetupDayChallenge do
 
     Created:
       • lib/year_#{year}/day_#{day}.ex
-      • lib/inputs/#{year}/day_#{day}/part_1.txt
-      • lib/inputs/#{year}/day_#{day}/part_2.txt
+      • lib/inputs/#{year}/day_#{day}/input.txt
       • test/year_#{year}/day_#{day}_test.exs
 
     Next steps:
       1. Read the puzzle at https://adventofcode.com/#{year}/day/#{day}
       2. Implement your solution in lib/year_#{year}/day_#{day}.ex
-      3. Run with: mix aoc.run #{year} #{day}
+      3. Run with: mix run_day_challenge #{year} #{day}
     """)
   end
 
