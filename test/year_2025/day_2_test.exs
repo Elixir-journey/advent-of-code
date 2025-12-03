@@ -3,9 +3,7 @@ defmodule Year2025.Day2Test do
 
   alias Year2025.Day2
 
-  @sample_input """
-  [paste sample input here]
-  """
+  @sample_input "95-115,11-22,998-1012"
 
   describe "Day 2: Gift Shop" do
     test "parse_input/1 parses sample input" do
@@ -20,7 +18,7 @@ defmodule Year2025.Day2Test do
         |> Day2.parse_input()
         |> Day2.solve_part_1()
 
-      assert result == :expected_value
+      assert result == 1142
     end
 
     @tag :part_2
@@ -30,17 +28,17 @@ defmodule Year2025.Day2Test do
         |> Day2.parse_input()
         |> Day2.solve_part_2()
 
-      assert result == :expected_value
+      assert result == 2252
     end
 
     @tag :solution
     test "part 1 solution" do
-      assert Day2.part_1() == :your_answer
+      assert Day2.part_1() == 44_854_383_294
     end
 
     @tag :solution
     test "part 2 solution" do
-      assert Day2.part_2() == :your_answer
+      assert Day2.part_2() == 55_647_141_923
     end
   end
 end
