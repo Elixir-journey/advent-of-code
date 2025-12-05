@@ -4,43 +4,52 @@ defmodule Year2025.Day5Test do
   alias Year2025.Day5
 
   @sample_input """
-  [paste sample input here]
+  3-5
+  10-14
+  16-20
+  12-18
+
+  3 7 12 20
   """
 
   describe "Day 5: Cafeteria" do
-    test "parse_input/1 parses sample input" do
-      parsed = Day5.parse_input(@sample_input)
-      assert is_list(parsed)
+    test "parse_ingredient_id_from_text/1 parses sample input" do
+      {ranges, ids} = Day5.parse_ingredient_id_from_text(@sample_input)
+
+      assert ranges == ["3-5", "10-14", "16-20", "12-18"]
+      assert ids == [3, 7, 12, 20]
     end
 
     @tag :part_1
     test "part 1 with sample input" do
       result =
         @sample_input
-        |> Day5.parse_input()
-        |> Day5.solve_part_1()
+        |> Day5.parse_ingredient_id_from_text()
+        |> Day5.count_all_fresh_ingredients_left()
 
-      assert result == :expected_value
+      # 3 is in 3-5, 7 is not in any range, 12 is in 10-14 and 12-18, 20 is in 16-20
+      assert result == 3
     end
 
     @tag :part_2
     test "part 2 with sample input" do
       result =
         @sample_input
-        |> Day5.parse_input()
-        |> Day5.solve_part_2()
+        |> Day5.parse_ingredient_id_from_text()
+        |> Day5.count_total_fresh_ids()
 
-      assert result == :expected_value
+      # Condensed: 3..5 (3) + 10..20 (11) = 14 unique IDs
+      assert result == 14
     end
 
     @tag :solution
     test "part 1 solution" do
-      assert Day5.part_1() == :your_answer
+      assert Day5.part_1() == 885
     end
 
     @tag :solution
     test "part 2 solution" do
-      assert Day5.part_2() == :your_answer
+      assert Day5.part_2() == 348_115_621_205_535
     end
   end
 end
