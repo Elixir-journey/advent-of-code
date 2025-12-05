@@ -11,24 +11,39 @@ defmodule Year2025.Day3Test do
   """
 
   describe "Day 3: Lobby" do
-    test "parse_battery_banks/1 parses sample input" do
-      parsed = Day3.parse_battery_banks(@sample_input)
-      assert is_list(parsed)
+    test "parse_battery_bank_voltage/1 parses sample input" do
+      parsed = Day3.parse_battery_bank_voltage(@sample_input)
+
+      assert parsed == [
+               987_654_321_111_111,
+               811_111_111_111_119,
+               234_234_234_234_278,
+               818_181_911_112_111
+             ]
     end
 
     @tag :part_1
     test "part 1 with sample input" do
-      result =
-        @sample_input
-        |> Day3.parse_battery_banks()
-        |> Day3.maximum_joltage_for_battery_banks()
+      result = Day3.maximum_joltage_for_battery_banks(@sample_input)
 
       assert result == 357
     end
 
     @tag :solution
     test "part 1 solution" do
-      assert Day3.part_1() == 17207
+      assert Day3.part_1() == 17_207
+    end
+
+    @tag :part_2
+    test "part 2 with sample input" do
+      result = Day3.maximum_joltage_for_battery_banks(@sample_input, 12)
+
+      assert result == 3_121_910_778_619
+    end
+
+    @tag :solution
+    test "part 2 solution" do
+      assert Day3.part_2() == 170_997_883_706_617
     end
   end
 end
