@@ -140,20 +140,19 @@ defmodule Mix.Tasks.SetupDayChallenge do
       ### Summarize what you need to achieve.
       \"\"\"
 
-      @data_path_part_1 "lib/inputs/#{year}/day_#{day}/part_1.txt"
-      @data_path_part_2 "lib/inputs/#{year}/day_#{day}/part_2.txt"
+      @data_path "lib/inputs/#{year}/day_#{day}/input.txt"
 
       alias Infrastructure.FileIO.InputFileLoader
 
       @doc \"\"\"
       Solves Part 1.
       \"\"\"
-      def part_1, do: solve(@data_path_part_1, &solve_part_1/1)
+      def part_1, do: solve(@data_path, &solve_part_1/1)
 
       @doc \"\"\"
       Solves Part 2.
       \"\"\"
-      def part_2, do: solve(@data_path_part_2, &solve_part_2/1)
+      def part_2, do: solve(@data_path, &solve_part_2/1)
 
       defp solve(path, solver) do
         path
