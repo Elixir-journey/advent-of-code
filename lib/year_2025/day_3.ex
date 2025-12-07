@@ -104,7 +104,7 @@ defmodule Year2025.Day3 do
 
   @spec select_digits(tuple(), non_neg_integer(), non_neg_integer(), non_neg_integer(), [0..9]) ::
           [0..9]
-  defp select_digits(_voltages, _bank_size, _start, _remaining = 0, acc), do: acc
+  defp select_digits(_voltages, _bank_size, _start, 0, acc), do: acc
 
   defp select_digits(voltages, bank_size, start, remaining, acc) do
     end_idx = bank_size - remaining
