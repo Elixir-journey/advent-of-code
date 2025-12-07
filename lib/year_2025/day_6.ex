@@ -3,65 +3,104 @@ defmodule Year2025.Day6 do
   --- Day 6: Trash Compactor ---
 
   ## Part 1
-  ### Summarize what you need to achieve.
+  Solve math problems arranged vertically in columns. Each column contains
+  numbers to be added or multiplied (indicated by the operator at the bottom).
+  Sum all the results.
 
   ## Part 2
-  ### Summarize what you need to achieve.
+  TODO
   """
-
-  @data_path "lib/inputs/2025/day_6/input.txt"
 
   alias Infrastructure.FileIO.InputFileLoader
 
-  @doc """
-  Solves Part 1.
-  """
-  def part_1, do: solve(@data_path, &solve_part_1/1)
+  @input_path "lib/inputs/2025/day_6/input.txt"
 
-  @doc """
-  Solves Part 2.
-  """
-  def part_2, do: solve(@data_path, &solve_part_2/1)
+  # Public Solution APIs
 
-  defp solve(path, solver) do
-    path
-    |> load_input()
-    |> solver.()
-  end
-
-  defp load_input(path) do
-    with {:ok, content} <- InputFileLoader.read_input(path) do
-      parse_input(content)
-    else
-      {:error, reason} -> raise "Failed to read input: #{reason}"
+  @spec part_1() :: non_neg_integer() | {:error, any()}
+  def part_1 do
+    case InputFileLoader.get_parsed_lines(@input_path) do
+      {:ok, worksheet} -> compute_worksheet_grand_total(worksheet)
+      {:error, reason} -> {:error, reason}
     end
   end
 
+  @spec part_2() :: non_neg_integer() | {:error, any()}
+  def part_2 do
+    case InputFileLoader.get_parsed_lines(@input_path) do
+      {:ok, worksheet} -> solve_part_2(worksheet)
+      {:error, reason} -> {:error, reason}
+    end
+  end
+
+  # Domain Logic
+
   @doc """
-  Parses the raw input into a usable data structure.
+  Computes the grand total by solving all problems on the worksheet.
+
+  ## Examples
+
+      iex> worksheet = [
+      ...>   ["123", "328", "51", "64"],
+      ...>   ["45", "64", "387", "23"],
+      ...>   ["6", "98", "215", "314"],
+      ...>   ["*", "+", "*", "+"]
+      ...> ]
+      iex> Year2025.Day6.compute_worksheet_grand_total(worksheet)
+      4277556
   """
-  def parse_input(content) do
-    content
-    |> String.trim()
-    |> String.split("\n")
-    # TODO: Add parsing logic
+  @spec compute_worksheet_grand_total([[String.t()]]) :: non_neg_integer()
+  def compute_worksheet_grand_total(worksheet) do
+    worksheet
+    |> transpose()
+    |> Task.async_stream(&solve_problem/1,
+      max_concurrency: System.schedulers_online(),
+      ordered: false
+    )
+    |> Enum.map(fn {:ok, result} -> result end)
+    |> Enum.sum()
   end
 
   @doc """
-  Solves Part 1 with the parsed input.
+  Solves a single problem (column). The last element is the operator,
+  the rest are numbers.
+
+  ## Examples
+
+      iex> Year2025.Day6.solve_problem(["123", "45", "6", "*"])
+      33210
+
+      iex> Year2025.Day6.solve_problem(["328", "64", "98", "+"])
+      490
   """
-  def solve_part_1(input) do
-    # TODO: Implement
-    input
-    |> length()
+  @spec solve_problem([String.t()]) :: non_neg_integer()
+  def solve_problem(column) do
+    [operator | reversed_numbers] = Enum.reverse(column)
+    numbers = reversed_numbers |> Enum.map(&String.to_integer/1)
+
+    apply_operation(operator, numbers)
   end
 
+  defp apply_operation("*", numbers), do: Enum.product(numbers)
+  defp apply_operation("+", numbers), do: Enum.sum(numbers)
+
   @doc """
-  Solves Part 2 with the parsed input.
+  Transposes rows into columns.
+
+  ## Examples
+
+      iex> Year2025.Day6.transpose([["a", "b"], ["c", "d"]])
+      [["a", "c"], ["b", "d"]]
   """
+  @spec transpose([[any()]]) :: [[any()]]
+  def transpose(rows) do
+    rows
+    |> Enum.zip()
+    |> Enum.map(&Tuple.to_list/1)
+  end
+
   def solve_part_2(input) do
     # TODO: Implement
-    input
-    |> length()
+    length(input)
   end
 end
