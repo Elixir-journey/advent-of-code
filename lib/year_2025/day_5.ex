@@ -32,10 +32,12 @@ defmodule Year2025.Day5 do
   end
 
   defp load_input(path) do
-    with {:ok, content} <- InputFileLoader.read_input(path) do
-      parse_ingredient_id_from_text(content)
-    else
-      {:error, reason} -> raise "Failed to read input: #{reason}"
+    case InputFileLoader.read_input(path) do
+      {:ok, content} ->
+        parse_ingredient_id_from_text(content)
+
+      {:error, reason} ->
+        {:error, reason}
     end
   end
 
